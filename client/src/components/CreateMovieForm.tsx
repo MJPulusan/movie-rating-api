@@ -5,6 +5,23 @@ export function CreateMovieForm() {
   const [imdbLink, setImdbLink] = useState('');
     const [rating, setRating] = useState('');
   const [summary, setSummary] = useState('');
+  const [error, setError] = useState('');
+
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+const ratingNumber = Number(rating);
+if (isNaN(ratingNumber) || ratingNumber >= 5) {
+    setError('Rating must be less than 5');
+    return;
+}
+   setError('');
+    alert('Movie submitted!\n' + JSON.stringify({
+      title,
+      imdbLink,
+      rating: ratingNumber,
+      summary,
+    }, null, 2));
+  }
 
 return (
     <div className="form-container">
@@ -38,7 +55,7 @@ return (
             onChange={(e) => setRating(e.target.value)}
             required
           />
-          {/* {error && <p className="error-message">{error}</p>} */}
+          {error && <p className="error-message">{error}</p>}
         </div>
 
         <div className="form-field">
